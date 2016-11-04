@@ -44,15 +44,15 @@ public class BooleanTypeManufacturerImpl extends AbstractTypeManufacturer<Boolea
         return retValue;
     }
 
-	/** It returns a boolean/Boolean value.
-	 * 
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return a boolean/Boolean value
-	 */
-	public Boolean getBoolean(AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a boolean/Boolean value.
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return a boolean/Boolean value
+     */
+    public Boolean getBoolean(AttributeMetadata attributeMetadata) {
 
-		return Boolean.TRUE;
-	}
+        return Boolean.TRUE;
+    }
 
 }

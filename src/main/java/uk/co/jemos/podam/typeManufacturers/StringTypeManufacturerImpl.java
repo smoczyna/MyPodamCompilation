@@ -71,37 +71,35 @@ public class StringTypeManufacturerImpl extends AbstractTypeManufacturer<String>
         return retValue;
     }
 
-	/** It returns a string value
-	 * 
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A String of default length
-	 */
-	public String getStringValue(AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a string value
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A String of default length
+     */
+    public String getStringValue(AttributeMetadata attributeMetadata) {
 
-		return getStringOfLength(PodamConstants.STR_DEFAULT_LENGTH,
-				attributeMetadata);
-	}
+        return getStringOfLength(PodamConstants.STR_DEFAULT_LENGTH,
+                attributeMetadata);
+    }
 
-	/**
-	 * It returns a String of {@code length} characters.
-	 * 
-	 * @param length
-	 *            The number of characters required in the returned String
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A String of {@code length} characters
-	 */
-	public String getStringOfLength(int length,
-			AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a String of {@code length} characters.
+     *
+     * @param length The number of characters required in the returned String
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A String of {@code length} characters
+     */
+    public String getStringOfLength(int length,
+            AttributeMetadata attributeMetadata) {
 
-		StringBuilder buff = new StringBuilder();
+        StringBuilder buff = new StringBuilder();
 
-		while (buff.length() < length) {
-			buff.append(PodamUtils.getNiceCharacter());
-		}
+        while (buff.length() < length) {
+            buff.append(PodamUtils.getNiceCharacter());
+        }
 
-		return buff.toString();
-	}
+        return buff.toString();
+    }
 
 }

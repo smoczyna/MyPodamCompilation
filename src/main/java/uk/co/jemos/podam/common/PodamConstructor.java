@@ -13,18 +13,19 @@ import java.lang.annotation.Target;
  * A typical example are immutable classes, where attributes are final and
  * declared in the constructor and they have getters but not setters.
  * </p>
- * 
+ *
  * @author mtedone
- * 
+ *
  */
 @Documented
 @Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PodamConstructor {
 
-	/** Gives users the possibility to leave comments
-	 *
-	 * @return comment value
-	 */
-	String comment() default "";
+    /**
+     * Gives users the possibility to leave comments
+     *
+     * @return comment value
+     */
+    String comment() default "";
 }

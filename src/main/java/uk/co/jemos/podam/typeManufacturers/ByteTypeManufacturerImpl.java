@@ -20,7 +20,9 @@ import java.util.Map;
  */
 public class ByteTypeManufacturerImpl extends AbstractTypeManufacturer<Byte> {
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(ByteTypeManufacturerImpl.class);
 
     /**
@@ -76,36 +78,33 @@ public class ByteTypeManufacturerImpl extends AbstractTypeManufacturer<Byte> {
         return retValue;
     }
 
-	/** It returns a byte/Byte value.
-	 * 
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return a boolean/Boolean value
-	 */
-	public Byte getByte(AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a byte/Byte value.
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return a boolean/Boolean value
+     */
+    public Byte getByte(AttributeMetadata attributeMetadata) {
 
-		byte nextByte;
-		do {
-			nextByte = (byte) RANDOM.nextInt(Byte.MAX_VALUE);
-		} while (nextByte == 0);
-		return nextByte;
-	}
+        byte nextByte;
+        do {
+            nextByte = (byte) RANDOM.nextInt(Byte.MAX_VALUE);
+        } while (nextByte == 0);
+        return nextByte;
+    }
 
-	/**
-	 * It returns a byte/Byte within min and max value (included).
-	 * 
-	 * @param minValue
-	 *            The minimum value for the returned value
-	 * @param maxValue
-	 *            The maximum value for the returned value
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A byte/Byte within min and max value (included).
-	 */
-	public Byte getByteInRange(byte minValue, byte maxValue,
-			AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a byte/Byte within min and max value (included).
+     *
+     * @param minValue The minimum value for the returned value
+     * @param maxValue The maximum value for the returned value
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A byte/Byte within min and max value (included).
+     */
+    public Byte getByteInRange(byte minValue, byte maxValue,
+            AttributeMetadata attributeMetadata) {
 
-		return (byte) (minValue + Math.random() * (maxValue - minValue) + 0.5);
-	}
+        return (byte) (minValue + Math.random() * (maxValue - minValue) + 0.5);
+    }
 
 }

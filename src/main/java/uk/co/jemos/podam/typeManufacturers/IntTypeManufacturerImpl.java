@@ -22,7 +22,9 @@ import java.util.Map;
  */
 public class IntTypeManufacturerImpl extends AbstractTypeManufacturer<Integer> {
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(IntTypeManufacturerImpl.class);
 
     /**
@@ -81,36 +83,33 @@ public class IntTypeManufacturerImpl extends AbstractTypeManufacturer<Integer> {
         return retValue;
     }
 
-	/** It returns an int/Integer value.
-	 *
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A int/Integer value
-	 */
-	public Integer getInteger(AttributeMetadata attributeMetadata) {
+    /**
+     * It returns an int/Integer value.
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A int/Integer value
+     */
+    public Integer getInteger(AttributeMetadata attributeMetadata) {
 
-		Integer retValue;
-		do {
-			retValue = RANDOM.nextInt();
-		} while (retValue.intValue() == 0);
-		return retValue;
-	}
+        Integer retValue;
+        do {
+            retValue = RANDOM.nextInt();
+        } while (retValue.intValue() == 0);
+        return retValue;
+    }
 
-	/**
-	 * It returns an int/Integer value between min and max value (included).
-	 * 
-	 * @param minValue
-	 *            The minimum value for the returned value
-	 * @param maxValue
-	 *            The maximum value for the returned value
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return An int/Integer value between min and max value (included).
-	 */
-	public int getIntegerInRange(int minValue, int maxValue,
-			AttributeMetadata attributeMetadata) {
+    /**
+     * It returns an int/Integer value between min and max value (included).
+     *
+     * @param minValue The minimum value for the returned value
+     * @param maxValue The maximum value for the returned value
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return An int/Integer value between min and max value (included).
+     */
+    public int getIntegerInRange(int minValue, int maxValue,
+            AttributeMetadata attributeMetadata) {
 
-		return PodamUtils.getIntegerInRange(minValue, maxValue);
-	}
+        return PodamUtils.getIntegerInRange(minValue, maxValue);
+    }
 
 }

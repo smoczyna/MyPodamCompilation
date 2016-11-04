@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package uk.co.jemos.podam.common;
 
@@ -16,27 +16,27 @@ import java.lang.annotation.Target;
  * which influence the value of an attribute. In few words, this annotation
  * dictates law in terms of which value the attribute ultimately will get.
  * </p>
- * 
+ *
  * @author mtedone
- * 
+ *
  */
 @Documented
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PodamStrategyValue {
 
-	/**
-	 * The strategy that will populate the annotated attribute
-	 * 
-	 * @return The strategy that will populate the annotated attribute
-	 */
-	Class<? extends AttributeStrategy<?>> value();
+    /**
+     * The strategy that will populate the annotated attribute
+     *
+     * @return The strategy that will populate the annotated attribute
+     */
+    Class<? extends AttributeStrategy<?>> value();
 
-	/**
-	 * It allows clients to write a comment on the usage of this annotation
-	 * 
-	 * @return The comment string
-	 */
-	String comment() default "";
+    /**
+     * It allows clients to write a comment on the usage of this annotation
+     *
+     * @return The comment string
+     */
+    String comment() default "";
 
 }

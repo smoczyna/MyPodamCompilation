@@ -12,103 +12,103 @@ import java.util.Arrays;
  */
 public class MapArguments extends AbstractMapArguments implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** The type of the Map key. */
-	private Class<?> keyClass;
+    /**
+     * The type of the Map key.
+     */
+    private Class<?> keyClass;
 
-	/** The type of the Map element. */
-	private Class<?> elementClass;
+    /**
+     * The type of the Map element.
+     */
+    private Class<?> elementClass;
 
-	/**
-	 * The generic type arguments for the current key generic class instance.
-	 */
-	private Type[] keyGenericTypeArgs;
+    /**
+     * The generic type arguments for the current key generic class instance.
+     */
+    private Type[] keyGenericTypeArgs;
 
-	/**
-	 * The generic type arguments for the current element generic class
-	 * instance.
-	 */
-	private Type[] elementGenericTypeArgs;
+    /**
+     * The generic type arguments for the current element generic class
+     * instance.
+     */
+    private Type[] elementGenericTypeArgs;
 
-	/**
-	 * @return the keyClass
-	 */
-	public Class<?> getKeyClass() {
-		return keyClass;
-	}
+    /**
+     * @return the keyClass
+     */
+    public Class<?> getKeyClass() {
+        return keyClass;
+    }
 
-	/**
-	 * @param keyClass
-	 *            the keyClass to set
-	 */
-	public void setKeyClass(Class<?> keyClass) {
-		this.keyClass = keyClass;
-	}
+    /**
+     * @param keyClass the keyClass to set
+     */
+    public void setKeyClass(Class<?> keyClass) {
+        this.keyClass = keyClass;
+    }
 
-	/**
-	 * @return the elementClass
-	 */
-	public Class<?> getElementClass() {
-		return elementClass;
-	}
+    /**
+     * @return the elementClass
+     */
+    public Class<?> getElementClass() {
+        return elementClass;
+    }
 
-	/**
-	 * @param elementClass
-	 *            the elementClass to set
-	 */
-	public void setElementClass(Class<?> elementClass) {
-		this.elementClass = elementClass;
-	}
+    /**
+     * @param elementClass the elementClass to set
+     */
+    public void setElementClass(Class<?> elementClass) {
+        this.elementClass = elementClass;
+    }
 
-	/**
-	 * @return the keyGenericTypeArgs
-	 */
-	public Type[] getKeyGenericTypeArgs() {
-		return keyGenericTypeArgs;
-	}
+    /**
+     * @return the keyGenericTypeArgs
+     */
+    public Type[] getKeyGenericTypeArgs() {
+        return keyGenericTypeArgs;
+    }
 
-	/**
-	 * @param keyGenericTypeArgs
-	 *            the keyGenericTypeArgs to set
-	 */
-	public void setKeyGenericTypeArgs(Type[] keyGenericTypeArgs) {
-		this.keyGenericTypeArgs = keyGenericTypeArgs.clone();
-	}
+    /**
+     * @param keyGenericTypeArgs the keyGenericTypeArgs to set
+     */
+    public void setKeyGenericTypeArgs(Type[] keyGenericTypeArgs) {
+        this.keyGenericTypeArgs = keyGenericTypeArgs.clone();
+    }
 
-	/**
-	 * @return the elementGenericTypeArgs
-	 */
-	public Type[] getElementGenericTypeArgs() {
-		return elementGenericTypeArgs;
-	}
+    /**
+     * @return the elementGenericTypeArgs
+     */
+    public Type[] getElementGenericTypeArgs() {
+        return elementGenericTypeArgs;
+    }
 
-	/**
-	 * @param elementGenericTypeArgs
-	 *            the elementGenericTypeArgs to set
-	 */
-	public void setElementGenericTypeArgs(Type[] elementGenericTypeArgs) {
-		this.elementGenericTypeArgs = elementGenericTypeArgs.clone();
-	}
+    /**
+     * @param elementGenericTypeArgs the elementGenericTypeArgs to set
+     */
+    public void setElementGenericTypeArgs(Type[] elementGenericTypeArgs) {
+        this.elementGenericTypeArgs = elementGenericTypeArgs.clone();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("MapArguments [toString()=");
-		builder.append(super.toString());
-		builder.append(", keyClass=");
-		builder.append(keyClass);
-		builder.append(", elementClass=");
-		builder.append(elementClass);
-		builder.append(", keyGenericTypeArgs=");
-		builder.append(Arrays.toString(keyGenericTypeArgs));
-		builder.append(", elementGenericTypeArgs=");
-		builder.append(Arrays.toString(elementGenericTypeArgs));
-		builder.append("]");
-		return builder.toString();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("MapArguments [toString()=");
+        builder.append(super.toString());
+        builder.append(", keyClass=");
+        builder.append(keyClass);
+        builder.append(", elementClass=");
+        builder.append(elementClass);
+        builder.append(", keyGenericTypeArgs=");
+        builder.append(Arrays.toString(keyGenericTypeArgs));
+        builder.append(", elementGenericTypeArgs=");
+        builder.append(Arrays.toString(elementGenericTypeArgs));
+        builder.append("]");
+        return builder.toString();
+    }
 
 }

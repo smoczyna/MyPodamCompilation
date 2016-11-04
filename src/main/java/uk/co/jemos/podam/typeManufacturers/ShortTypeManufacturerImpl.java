@@ -20,7 +20,9 @@ import java.util.Map;
  */
 public class ShortTypeManufacturerImpl extends AbstractTypeManufacturer<Short> {
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(ShortTypeManufacturerImpl.class);
 
     /**
@@ -76,36 +78,33 @@ public class ShortTypeManufacturerImpl extends AbstractTypeManufacturer<Short> {
         return retValue;
     }
 
-    /** It returns a short/Short value.
-	 *
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A short/Short value.
-	 */
-	public Short getShort(AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a short/Short value.
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A short/Short value.
+     */
+    public Short getShort(AttributeMetadata attributeMetadata) {
 
-		short retValue;
-		do {
-			retValue = (short) RANDOM.nextInt(Byte.MAX_VALUE);
-		} while (retValue == 0);
-		return retValue;
-	}
+        short retValue;
+        do {
+            retValue = (short) RANDOM.nextInt(Byte.MAX_VALUE);
+        } while (retValue == 0);
+        return retValue;
+    }
 
-	/**
-	 * It returns a short/Short value between min and max value (included).
-	 * 
-	 * @param minValue
-	 *            The minimum value for the returned value
-	 * @param maxValue
-	 *            The maximum value for the returned value
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A short/Short value between min and max value (included).
-	 */
-	public Short getShortInRange(short minValue, short maxValue,
-			AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a short/Short value between min and max value (included).
+     *
+     * @param minValue The minimum value for the returned value
+     * @param maxValue The maximum value for the returned value
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A short/Short value between min and max value (included).
+     */
+    public Short getShortInRange(short minValue, short maxValue,
+            AttributeMetadata attributeMetadata) {
 
-		return (short) (minValue + Math.random() * (maxValue - minValue) + 0.5);
-	}
+        return (short) (minValue + Math.random() * (maxValue - minValue) + 0.5);
+    }
 
 }

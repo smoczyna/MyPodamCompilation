@@ -12,7 +12,9 @@ import java.util.Random;
  */
 public abstract class AbstractTypeManufacturer<T> implements TypeManufacturer<T> {
 
-	/** A RANDOM generator */
-	protected static final Random RANDOM = new Random(System.currentTimeMillis());
+    /**
+     * A RANDOM generator
+     */
+    protected static final Random RANDOM = new Random(System.currentTimeMillis());
 
 }

@@ -22,7 +22,9 @@ import java.util.Map;
  */
 public class LongTypeManufacturerImpl extends AbstractTypeManufacturer<Long> {
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(LongTypeManufacturerImpl.class);
 
     /**
@@ -79,32 +81,30 @@ public class LongTypeManufacturerImpl extends AbstractTypeManufacturer<Long> {
         return retValue;
     }
 
-    /** It returns a long/Long value.
+    /**
+     * It returns a long/Long value.
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A long/Long value
 	 *
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A long/Long value
-	 * */
-	public Long getLong(AttributeMetadata attributeMetadata) {
+     */
+    public Long getLong(AttributeMetadata attributeMetadata) {
 
-		return System.nanoTime();
-	}
+        return System.nanoTime();
+    }
 
-	/**
-	 * It returns a long/Long value between min and max value (included).
-	 * 
-	 * @param minValue
-	 *            The minimum value for the returned value
-	 * @param maxValue
-	 *            The maximum value for the returned value
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A long/Long value between min and max value (included).
-	 */
-	public Long getLongInRange(long minValue, long maxValue,
-			AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a long/Long value between min and max value (included).
+     *
+     * @param minValue The minimum value for the returned value
+     * @param maxValue The maximum value for the returned value
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A long/Long value between min and max value (included).
+     */
+    public Long getLongInRange(long minValue, long maxValue,
+            AttributeMetadata attributeMetadata) {
 
-		return PodamUtils.getLongInRange(minValue, maxValue);
-	}
+        return PodamUtils.getLongInRange(minValue, maxValue);
+    }
 
 }

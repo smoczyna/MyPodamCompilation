@@ -64,32 +64,29 @@ public class CharTypeManufacturerImpl extends AbstractTypeManufacturer<Character
         return retValue;
     }
 
-	/** It returns a char/Character value.
-	 * 
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return a char/Character value
-	 */
-	public Character getCharacter(AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a char/Character value.
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return a char/Character value
+     */
+    public Character getCharacter(AttributeMetadata attributeMetadata) {
 
-		return PodamUtils.getNiceCharacter();
-	}
+        return PodamUtils.getNiceCharacter();
+    }
 
-	/**
-	 * It returns a char/Character value between min and max value (included).
-	 * 
-	 * @param minValue
-	 *            The minimum value for the returned value
-	 * @param maxValue
-	 *            The maximum value for the returned value
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A char/Character value between min and max value (included).
-	 */
-	public Character getCharacterInRange(char minValue, char maxValue,
-			AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a char/Character value between min and max value (included).
+     *
+     * @param minValue The minimum value for the returned value
+     * @param maxValue The maximum value for the returned value
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A char/Character value between min and max value (included).
+     */
+    public Character getCharacterInRange(char minValue, char maxValue,
+            AttributeMetadata attributeMetadata) {
 
-		return (char) (minValue + Math.random() * (maxValue - minValue) + 0.5);
-	}
+        return (char) (minValue + Math.random() * (maxValue - minValue) + 0.5);
+    }
 
 }

@@ -16,10 +16,10 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @since 7.0.0.RELEASE
  */
-public class MapTypeManufacturerImpl extends AbstractTypeManufacturer<Map<Object,Object>> {
+public class MapTypeManufacturerImpl extends AbstractTypeManufacturer<Map<Object, Object>> {
 
     @Override
-    public Map<Object,Object> getType(DataProviderStrategy strategy,
+    public Map<Object, Object> getType(DataProviderStrategy strategy,
             AttributeMetadata attributeMetadata,
             Map<String, Type> genericTypesArgumentsMap) {
 
@@ -34,10 +34,8 @@ public class MapTypeManufacturerImpl extends AbstractTypeManufacturer<Map<Object
             if (mapType.isAssignableFrom(ConcurrentHashMap.class)) {
                 retValue = new ConcurrentHashMap<Object, Object>();
             }
-        } else {
-            if (mapType.isAssignableFrom(HashMap.class)) {
-                retValue = new HashMap<Object, Object>();
-            }
+        } else if (mapType.isAssignableFrom(HashMap.class)) {
+            retValue = new HashMap<Object, Object>();
         }
 
         return retValue;

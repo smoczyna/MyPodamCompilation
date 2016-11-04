@@ -13,7 +13,7 @@ public abstract class AbstractExternalFactory implements PodamFactory {
 
     @Override
     public <T> T manufacturePojoWithFullData(Class<T> pojoClass,
-                                             Type... genericTypeArgs) {
+            Type... genericTypeArgs) {
         return this.manufacturePojo(pojoClass, genericTypeArgs);
     }
 

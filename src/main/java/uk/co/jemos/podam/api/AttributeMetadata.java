@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package uk.co.jemos.podam.api;
 
@@ -19,132 +19,126 @@ import net.jcip.annotations.Immutable;
  * value is being assigned. For instance, clients might assign different values
  * based on the attribute name.
  * </p>
- * 
+ *
  * @author mtedone
- * 
+ *
  */
 @Immutable
 public class AttributeMetadata implements Serializable {
 
-	// ------------------->> Constants
+    // ------------------->> Constants
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;
+    // ------------------->> Instance / Static variables
+    /**
+     * The attribute name
+     */
+    private final String attributeName;
 
-	// ------------------->> Instance / Static variables
+    /**
+     * The attribute type
+     */
+    private final Class<?> attributeType;
 
-	/** The attribute name */
-	private final String attributeName;
+    /**
+     * The attribute generic type
+     */
+    private final Type attributeGenericType;
 
-	/** The attribute type */
-	private final Class<?> attributeType;
+    /**
+     * The attribute type generic arguments
+     */
+    private final Type[] attrGenericArgs;
 
-	/** The attribute generic type */
-	private final Type attributeGenericType;
+    /**
+     * The attribute annotations
+     */
+    private final List<Annotation> attributeAnnotations;
 
-	/** The attribute type generic arguments */
-	private final Type[] attrGenericArgs;
+    /**
+     * Type of class that owns the attribute
+     */
+    private final Class<?> pojoClass;
 
-	/** The attribute annotations */
-	private final List<Annotation> attributeAnnotations;
+    // ------------------->> Constructors
+    /**
+     * Full constructor.
+     *
+     * @param attributeName The attribute name
+     * @param attributeType The attribute type
+     * @param attributeGenericType The attribute generic type
+     * @param attrGenericArgs The attribute type generic arguments
+     * @param attributeAnnotations The attribute annotations
+     * @param declaringClass The type of class that owns the attribute
+     */
+    public AttributeMetadata(String attributeName, Class<?> attributeType,
+            Type attributeGenericType, Type[] attrGenericArgs,
+            List<Annotation> attributeAnnotations, Class<?> declaringClass) {
+        this.attributeName = attributeName;
+        this.attributeType = attributeType;
+        this.attributeGenericType = attributeGenericType;
+        this.attrGenericArgs = attrGenericArgs;
+        this.attributeAnnotations = attributeAnnotations;
+        this.pojoClass = declaringClass;
+    }
 
-	/** Type of class that owns the attribute */
-	private final Class<?> pojoClass;
+    /**
+     * Constructor for method parameters metadata
+     *
+     * @param attributeType The attribute type
+     * @param attributeGenericType The attribute generic type
+     * @param attrGenericArgs The attribute type generic arguments
+     * @param declaringClass The type of class that owns the attribute
+     */
+    public AttributeMetadata(Class<?> attributeType, Type attributeGenericType,
+            Type[] attrGenericArgs, Class<?> declaringClass) {
+        this(null, attributeType, attributeGenericType, attrGenericArgs,
+                Collections.<Annotation>emptyList(), declaringClass);
+    }
 
-	// ------------------->> Constructors
+    // ------------------->> Public methods
+    // ------------------->> Getters / Setters
+    public String getAttributeName() {
+        return attributeName;
+    }
 
-	/**
-	 * Full constructor.
-	 * 
-	 * @param attributeName
-	 *            The attribute name
-	 * @param attributeType
-	 *            The attribute type
-	 * @param attributeGenericType
-	 *            The attribute generic type
-	 * @param attrGenericArgs
-	 *            The attribute type generic arguments
-	 * @param attributeAnnotations
-	 *            The attribute annotations
-	 * @param declaringClass
-	 *            The type of class that owns the attribute
-	 */
-	public AttributeMetadata(String attributeName, Class<?> attributeType,
-			Type attributeGenericType, Type[] attrGenericArgs,
-			List<Annotation> attributeAnnotations, Class<?> declaringClass) {
-		this.attributeName = attributeName;
-		this.attributeType = attributeType;
-		this.attributeGenericType = attributeGenericType;
-		this.attrGenericArgs = attrGenericArgs;
-		this.attributeAnnotations = attributeAnnotations;
-		this.pojoClass = declaringClass;
-	}
+    public Class<?> getAttributeType() {
+        return attributeType;
+    }
 
-	/**
-	 * Constructor for method parameters metadata
-	 * 
-	 * @param attributeType
-	 *            The attribute type
-	 * @param attributeGenericType
-	 *            The attribute generic type
-	 * @param attrGenericArgs
-	 *            The attribute type generic arguments
-	 * @param declaringClass
-	 *            The type of class that owns the attribute
-	 */
-	public AttributeMetadata(Class<?> attributeType, Type attributeGenericType,
-			Type[] attrGenericArgs, Class<?> declaringClass) {
-		this(null, attributeType, attributeGenericType, attrGenericArgs,
-				Collections.<Annotation>emptyList(), declaringClass);
-	}
+    public Type getAttributeGenericType() {
+        return attributeGenericType;
+    }
 
-	// ------------------->> Public methods
+    public Type[] getAttrGenericArgs() {
+        return attrGenericArgs;
+    }
 
-	// ------------------->> Getters / Setters
+    public List<Annotation> getAttributeAnnotations() {
+        return attributeAnnotations;
+    }
 
-	public String getAttributeName() {
-		return attributeName;
-	}
+    public Class<?> getPojoClass() {
+        return pojoClass;
+    }
 
-	public Class<?> getAttributeType() {
-		return attributeType;
-	}
+    // ------------------->> Private methods
+    // ------------------->> equals() / hashcode() / toString()
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("AttributeMetadata [");
+        builder.append("attributeName=").append(attributeName);
+        builder.append(", attributeType=").append(attributeType);
+        builder.append(", attributeGenericType=").append(attributeGenericType);
+        builder.append(", pojoClass=").append(pojoClass);
+        builder.append(", attributeAnnotations=").append(attributeAnnotations);
+        builder.append("]");
+        return builder.toString();
+    }
 
-	public Type getAttributeGenericType() {
-		return attributeGenericType;
-	}
-
-	public Type[] getAttrGenericArgs() {
-		return attrGenericArgs;
-	}
-
-	public List<Annotation> getAttributeAnnotations() {
-		return attributeAnnotations;
-	}
-
-	public Class<?> getPojoClass() {
-		return pojoClass;
-	}
-
-	// ------------------->> Private methods
-
-	// ------------------->> equals() / hashcode() / toString()
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AttributeMetadata [");
-		builder.append("attributeName=").append(attributeName);
-		builder.append(", attributeType=").append(attributeType);
-		builder.append(", attributeGenericType=").append(attributeGenericType);
-		builder.append(", pojoClass=").append(pojoClass);
-		builder.append(", attributeAnnotations=").append(attributeAnnotations);
-		builder.append("]");
-		return builder.toString();
-	}
-
-	// ------------------->> Inner classes
-
+    // ------------------->> Inner classes
 }

@@ -21,10 +21,10 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class GenericTypeManufacturerImpl extends AbstractTypeManufacturer<Object> {
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(GenericTypeManufacturerImpl.class);
-
-
 
     @Override
     public Object getType(DataProviderStrategy strategy,
@@ -45,7 +45,7 @@ public class GenericTypeManufacturerImpl extends AbstractTypeManufacturer<Object
 
         Type paremeterType = null;
         if (genericAttributeType instanceof ParameterizedType) {
-            ParameterizedType parametrized =  (ParameterizedType) genericAttributeType;
+            ParameterizedType parametrized = (ParameterizedType) genericAttributeType;
             Type[] arguments = parametrized.getActualTypeArguments();
             if (arguments.length > 0) {
                 paremeterType = arguments[0];
@@ -63,7 +63,7 @@ public class GenericTypeManufacturerImpl extends AbstractTypeManufacturer<Object
             AtomicReference<Type[]> elementGenericTypeArgs
                     = new AtomicReference<Type[]>(PodamConstants.NO_TYPES);
             return TypeManufacturerUtil.resolveGenericParameter(paremeterType,
-            		genericTypesArgumentsMap, elementGenericTypeArgs);
+                    genericTypesArgumentsMap, elementGenericTypeArgs);
         } else {
             LOG.error("{} is missing generic type argument, supplied {} {}",
                     genericAttributeType, genericTypesArgumentsMap,

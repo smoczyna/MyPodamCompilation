@@ -1,6 +1,5 @@
 package uk.co.jemos.podam.typeManufacturers;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +21,9 @@ import java.util.Map;
  */
 public class DoubleTypeManufacturerImpl extends AbstractTypeManufacturer<Double> {
 
-    /** The application logger */
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(DoubleTypeManufacturerImpl.class);
 
     /**
@@ -64,7 +65,7 @@ public class DoubleTypeManufacturerImpl extends AbstractTypeManufacturer<Double>
                     }
 
                     retValue = getDoubleInRange(minValue, maxValue,
-                             attributeMetadata);
+                            attributeMetadata);
                 }
 
                 break;
@@ -80,44 +81,41 @@ public class DoubleTypeManufacturerImpl extends AbstractTypeManufacturer<Double>
         return retValue;
     }
 
-    /** It returns a double/Double value
-	 *
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return a double/Double value
-	 */
-	public Double getDouble(AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a double/Double value
+     *
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return a double/Double value
+     */
+    public Double getDouble(AttributeMetadata attributeMetadata) {
 
-		double retValue;
-		do {
-			retValue = RANDOM.nextDouble();
-		} while (retValue == 0.0);
-		return retValue;
-	}
+        double retValue;
+        do {
+            retValue = RANDOM.nextDouble();
+        } while (retValue == 0.0);
+        return retValue;
+    }
 
-	/**
-	 * It returns a double/Double value between min and max value (included).
-	 * 
-	 * @param minValue
-	 *            The minimum value for the returned value
-	 * @param maxValue
-	 *            The maximum value for the returned value
-	 * @param attributeMetadata
-	 *            attribute metadata for instance to be fetched
-	 * @return A double/Double value between min and max value (included)
-	 */
-	public Double getDoubleInRange(double minValue, double maxValue,
-			AttributeMetadata attributeMetadata) {
+    /**
+     * It returns a double/Double value between min and max value (included).
+     *
+     * @param minValue The minimum value for the returned value
+     * @param maxValue The maximum value for the returned value
+     * @param attributeMetadata attribute metadata for instance to be fetched
+     * @return A double/Double value between min and max value (included)
+     */
+    public Double getDoubleInRange(double minValue, double maxValue,
+            AttributeMetadata attributeMetadata) {
 
-		// This can happen. It's a way to specify a precise value
-		if (minValue == maxValue) {
-			return minValue;
-		}
-		double retValue;
-		do {
-			retValue = minValue + Math.random() * (maxValue - minValue + 1);
-		} while (retValue > maxValue);
-		return retValue;
-	}
+        // This can happen. It's a way to specify a precise value
+        if (minValue == maxValue) {
+            return minValue;
+        }
+        double retValue;
+        do {
+            retValue = minValue + Math.random() * (maxValue - minValue + 1);
+        } while (retValue > maxValue);
+        return retValue;
+    }
 
 }

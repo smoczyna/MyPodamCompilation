@@ -38,10 +38,8 @@ public class CollectionTypeManufacturerImpl extends AbstractTypeManufacturer<Col
             if (collectionType.isAssignableFrom(HashSet.class)) {
                 retValue = new HashSet<Object>();
             }
-        } else {
-            if (collectionType.isAssignableFrom(ArrayList.class)) {
-                retValue = new ArrayList<Object>();
-            }
+        } else if (collectionType.isAssignableFrom(ArrayList.class)) {
+            retValue = new ArrayList<Object>();
         }
         return retValue;
     }

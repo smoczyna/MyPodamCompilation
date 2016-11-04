@@ -27,11 +27,15 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 6.0.0.RELEASE
  */
 public final class TypeManufacturerUtil {
-    
-    /** The application logger */
+
+    /**
+     * The application logger
+     */
     private static final Logger LOG = LoggerFactory.getLogger(TypeManufacturerUtil.class);
-    
-    /** Non instantiable. */
+
+    /**
+     * Non instantiable.
+     */
     private TypeManufacturerUtil() {
         throw new AssertionError("Non instantiable");
     }
@@ -40,18 +44,15 @@ public final class TypeManufacturerUtil {
      * It returns a {@link AttributeStrategy} if one was specified in
      * annotations, or {@code null} otherwise.
      *
-     * @param strategy
-     *            The data provider strategy
-     * @param annotations
-     *            The list of annotations
-     * @param attributeType
-     *            Type of attribute expected to be returned
+     * @param strategy The data provider strategy
+     * @param annotations The list of annotations
+     * @param attributeType Type of attribute expected to be returned
      * @return {@link AttributeStrategy}, if {@link PodamStrategyValue} or bean
-     *         validation constraint annotation was found among annotations
-     * @throws IllegalAccessException
-     *         if attribute strategy cannot be instantiated
-     * @throws InstantiationException
-     *         if attribute strategy cannot be instantiated
+     * validation constraint annotation was found among annotations
+     * @throws IllegalAccessException if attribute strategy cannot be
+     * instantiated
+     * @throws InstantiationException if attribute strategy cannot be
+     * instantiated
      */
     public static AttributeStrategy<?> findAttributeStrategy(DataProviderStrategy strategy,
             List<Annotation> annotations, Class<?> attributeType)
@@ -66,7 +67,7 @@ public final class TypeManufacturerUtil {
                 return strategyAnnotation.value().newInstance();
             }
 
-			/* Find real class out of proxy */
+            /* Find real class out of proxy */
             Class<? extends Annotation> annotationClass = annotation.getClass();
             if (Proxy.isProxyClass(annotationClass)) {
                 Class<?>[] interfaces = annotationClass.getInterfaces();
@@ -83,9 +84,9 @@ public final class TypeManufacturerUtil {
             }
 
             if (annotation.annotationType().getAnnotation(Constraint.class) != null) {
-                if (annotation instanceof NotNull ||
-                        annotation.annotationType().getName().equals("org.hibernate.validator.constraints.NotEmpty")) {
-					/* We don't need to do anything for NotNull constraint */
+                if (annotation instanceof NotNull
+                        || annotation.annotationType().getName().equals("org.hibernate.validator.constraints.NotEmpty")) {
+                    /* We don't need to do anything for NotNull constraint */
                     iter.remove();
                 } else if (!NotNull.class.getPackage().equals(annotationClass.getPackage())) {
                     LOG.warn("Please, register AttributeStratergy for custom "
@@ -116,24 +117,21 @@ public final class TypeManufacturerUtil {
      * map, which will be used for type mapping.
      * </p>
      *
-     * @param typeArgsMap
-     *            a map to fill
-     * @param pojoClass
-     *            Typed class
-     * @param genericTypeArgs
-     *            Type arguments provided for a generics object by caller
+     * @param typeArgsMap a map to fill
+     * @param pojoClass Typed class
+     * @param genericTypeArgs Type arguments provided for a generics object by
+     * caller
      * @return Array of unused provided generic type arguments
-     * @throws IllegalStateException
-     *             If number of typed parameters doesn't match number of
-     *             provided generic types
+     * @throws IllegalStateException If number of typed parameters doesn't match
+     * number of provided generic types
      */
     public static Type[] fillTypeArgMap(final Map<String, Type> typeArgsMap,
-                                  final Class<?> pojoClass, final Type[] genericTypeArgs) {
+            final Class<?> pojoClass, final Type[] genericTypeArgs) {
 
         TypeVariable<?>[] array = pojoClass.getTypeParameters();
         List<TypeVariable<?>> typeParameters = new ArrayList<TypeVariable<?>>(Arrays.asList(array));
         Iterator<TypeVariable<?>> iterator = typeParameters.iterator();
-		/* Removing types, which are already in typeArgsMap */
+        /* Removing types, which are already in typeArgsMap */
         while (iterator.hasNext()) {
             if (typeArgsMap.containsKey(iterator.next().getName())) {
                 iterator.remove();
@@ -142,7 +140,7 @@ public final class TypeManufacturerUtil {
 
         List<Type> genericTypes = new ArrayList<Type>(Arrays.asList(genericTypeArgs));
         Iterator<Type> iterator2 = genericTypes.iterator();
-		/* Removing types, which are type variables */
+        /* Removing types, which are type variables */
         while (iterator2.hasNext()) {
             if (iterator2.next() instanceof TypeVariable) {
                 iterator2.remove();
@@ -169,7 +167,7 @@ public final class TypeManufacturerUtil {
             genericTypeArgsExtra = PodamConstants.NO_TYPES;
         }
 
-		/* Adding types, which were specified during inheritance */
+        /* Adding types, which were specified during inheritance */
         Class<?> clazz = pojoClass;
         while (clazz != null) {
             Type superType = clazz.getGenericSuperclass();
@@ -192,34 +190,26 @@ public final class TypeManufacturerUtil {
     }
 
     /**
-     * Searches for annotation with information about collection/map size
-     * and filling strategies
+     * Searches for annotation with information about collection/map size and
+     * filling strategies
      *
-     * @param strategy
-     *        a data provider strategy
-     * @param annotations
-     *        a list of annotations to inspect
-     * @param collectionElementType
-     *        a collection element type
-     * @param elementStrategyHolder
-     *        a holder to pass found element strategy back to the caller,
-     *        can be null
-     * @param keyStrategyHolder
-     *        a holder to pass found key strategy back to the caller,
-     *        can be null
-     * @return
-     *        A number of element in collection or null, if no annotation was
-     *        found
-     * @throws InstantiationException
-     *        A strategy cannot be instantiated
-     * @throws IllegalAccessException
-     *        A strategy cannot be instantiated
+     * @param strategy a data provider strategy
+     * @param annotations a list of annotations to inspect
+     * @param collectionElementType a collection element type
+     * @param elementStrategyHolder a holder to pass found element strategy back
+     * to the caller, can be null
+     * @param keyStrategyHolder a holder to pass found key strategy back to the
+     * caller, can be null
+     * @return A number of element in collection or null, if no annotation was
+     * found
+     * @throws InstantiationException A strategy cannot be instantiated
+     * @throws IllegalAccessException A strategy cannot be instantiated
      */
-    public static Integer findCollectionSize( DataProviderStrategy strategy,
-                                        List<Annotation> annotations,
-                                        Class<?> collectionElementType,
-                                        Holder<AttributeStrategy<?>> elementStrategyHolder,
-                                        Holder<AttributeStrategy<?>> keyStrategyHolder)
+    public static Integer findCollectionSize(DataProviderStrategy strategy,
+            List<Annotation> annotations,
+            Class<?> collectionElementType,
+            Holder<AttributeStrategy<?>> elementStrategyHolder,
+            Holder<AttributeStrategy<?>> keyStrategyHolder)
             throws InstantiationException, IllegalAccessException {
 
         // If the user defined a strategy to fill the collection elements,
@@ -275,17 +265,14 @@ public final class TypeManufacturerUtil {
      * Utility to merge actual types with supplied array of generic type
      * substitutions
      *
-     * @param attributeType
-     *            actual type of object
-     * @param genericAttributeType
-     *            generic type of object
-     * @param suppliedTypes
-     *            an array of supplied types for generic type substitution
-     * @param typeArgsMap
-     *            a map relating the generic class arguments ("&lt;T, V&gt;" for
-     *            example) with their actual types
+     * @param attributeType actual type of object
+     * @param genericAttributeType generic type of object
+     * @param suppliedTypes an array of supplied types for generic type
+     * substitution
+     * @param typeArgsMap a map relating the generic class arguments ("&lt;T,
+     * V&gt;" for example) with their actual types
      * @return An array of merged actual and supplied types with generic types
-     *            resolved
+     * resolved
      */
     public static Type[] mergeActualAndSuppliedGenericTypes(
             Class<?> attributeType, Type genericAttributeType, Type[] suppliedTypes,
@@ -315,7 +302,7 @@ public final class TypeManufacturerUtil {
 
             Type type = null;
             if (actualTypes[i] instanceof TypeVariable) {
-                type = typeArgsMap.get(((TypeVariable<?>)actualTypes[i]).getName());
+                type = typeArgsMap.get(((TypeVariable<?>) actualTypes[i]).getName());
             } else if (actualTypes[i] instanceof WildcardType) {
                 AtomicReference<Type[]> methodGenericTypeArgs
                         = new AtomicReference<Type[]>(PodamConstants.NO_TYPES);
@@ -354,18 +341,15 @@ public final class TypeManufacturerUtil {
      * It resolves generic parameter type
      *
      *
-     * @param paramType
-     *            The generic parameter type
-     * @param typeArgsMap
-     *            A map of resolved types
-     * @param methodGenericTypeArgs
-     *            Return value posible generic types of the generic parameter
-     *            type
+     * @param paramType The generic parameter type
+     * @param typeArgsMap A map of resolved types
+     * @param methodGenericTypeArgs Return value posible generic types of the
+     * generic parameter type
      * @return value for class representing the generic parameter type
      */
     public static Class<?> resolveGenericParameter(Type paramType,
-                                             Map<String, Type> typeArgsMap,
-                                             AtomicReference<Type[]> methodGenericTypeArgs) {
+            Map<String, Type> typeArgsMap,
+            AtomicReference<Type[]> methodGenericTypeArgs) {
 
         Class<?> parameterType = null;
 
@@ -411,32 +395,27 @@ public final class TypeManufacturerUtil {
         return parameterType;
     }
 
-
     /**
      * It retrieves the value for the {@link PodamStrategyValue} annotation with
      * which the attribute was annotated
      *
-     * @param attributeType
-     *            The attribute type, used for type checking
-     * @param attributeStrategy
-     *            The {@link AttributeStrategy} to use
+     * @param attributeType The attribute type, used for type checking
+     * @param attributeStrategy The {@link AttributeStrategy} to use
      * @return The value for the {@link PodamStrategyValue} annotation with
-     *         which the attribute was annotated
-     * @throws IllegalArgumentException
-     *             If the type of the data strategy defined for the
-     *             {@link PodamStrategyValue} annotation is not assignable to
-     *             the annotated attribute. This de facto guarantees type
-     *             safety.
+     * which the attribute was annotated
+     * @throws IllegalArgumentException If the type of the data strategy defined
+     * for the {@link PodamStrategyValue} annotation is not assignable to the
+     * annotated attribute. This de facto guarantees type safety.
      */
     public static Object returnAttributeDataStrategyValue(Class<?> attributeType,
-                                                    AttributeStrategy<?> attributeStrategy)
+            AttributeStrategy<?> attributeStrategy)
             throws IllegalArgumentException {
 
         Object retValue = attributeStrategy.getValue();
 
         if (retValue != null) {
-            Class<?> desiredType = attributeType.isPrimitive() ?
-                    PodamUtils.primitiveToBoxedType(attributeType) : attributeType;
+            Class<?> desiredType = attributeType.isPrimitive()
+                    ? PodamUtils.primitiveToBoxedType(attributeType) : attributeType;
             if (!desiredType.isAssignableFrom(retValue.getClass())) {
                 String errMsg = "The type of the Podam Attribute Strategy is not "
                         + attributeType.getName() + " but "

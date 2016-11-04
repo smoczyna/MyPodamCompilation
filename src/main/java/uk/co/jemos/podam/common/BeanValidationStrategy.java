@@ -1,8 +1,7 @@
 /**
- * 
+ *
  */
 package uk.co.jemos.podam.common;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,298 +26,285 @@ import java.util.concurrent.TimeUnit;
  */
 public class BeanValidationStrategy implements AttributeStrategy<Object> {
 
-	// ------------------->> Constants
-
-	// ------------------->> Instance / Static variables
-
-	private static final Logger LOG = LoggerFactory.getLogger(BeanValidationStrategy.class);
-
-	/** A RANDOM generator */
-	private static final Random RANDOM = new Random(System.currentTimeMillis());
-
-	/** bean validation annotations */
-	private List<Annotation> annotations;
-
-	/** expected return type of an attribute */
-	private Class<?> attributeType;
-
-	// ------------------->> Constructors
-
-	/**
-	 * Constructor for the strategy
-	 *
-	 * @param annotations
-	 *        bean validation annotations
-	 * @param attributeType
-	 *        expected return type of an attribute
-	 */
-	public BeanValidationStrategy(List<Annotation> annotations, Class<?> attributeType) {
-		this.annotations = annotations;
-		this.attributeType = attributeType;
-	}
-
-	// ------------------->> Public methods
-
-	// ------------------->> Getters / Setters
-
-	/**
-	 * It returns a {@link Calendar} objects complying with Java bean validation
-	 * annotations.
-	 * 
-	 * {@inheritDoc}
-	 */
-	public Object getValue() throws PodamMockeryException {
-
-		if (null != findTypeFromList(annotations, AssertTrue.class)) {
-
-			return Boolean.TRUE;
-		}
-
-		if (null != findTypeFromList(annotations, AssertFalse.class)) {
-
-			return Boolean.FALSE;
-		}
-
-		if (null != findTypeFromList(annotations, Past.class)) {
-
-			int days = RANDOM.nextInt(365) + 1;
-			long timestamp = System.currentTimeMillis() - TimeUnit.DAYS.toSeconds(days);
-			return timestampToReturnType(timestamp);
-		}
-
-		if (null != findTypeFromList(annotations, Future.class)) {
-
-			int days = RANDOM.nextInt(365) + 1;
-			long timestamp = System.currentTimeMillis() + TimeUnit.DAYS.toSeconds(days);
-			return timestampToReturnType(timestamp);
-		}
-
-		Annotation minAnno = null;
-		Annotation maxAnno = null;
-
-		minAnno = findTypeFromList(annotations, DecimalMin.class);
-		maxAnno = findTypeFromList(annotations, DecimalMax.class);
-		if ((null != minAnno) || (null != maxAnno)) {
-
-			BigDecimal min;
-			if (null != minAnno) {
-				DecimalMin tmp = (DecimalMin) minAnno;
-				min = new BigDecimal(tmp.value());
-			} else {
-				min = new BigDecimal(Double.MIN_VALUE);
-			}
-			BigDecimal max;
-			if (null != maxAnno) {
-				DecimalMax tmp = (DecimalMax) maxAnno;
-				max = new BigDecimal(tmp.value());
-			} else {
-				max = new BigDecimal(Double.MAX_VALUE);
-			}
-			return decimalToReturnType(getValueInRange(min, max));
-		}
-
-		minAnno = findTypeFromList(annotations, Min.class);
-		maxAnno = findTypeFromList(annotations, Max.class);
-		if ((null != minAnno) || (null != maxAnno)) {
-
-			BigDecimal min;
-			if (null != minAnno) {
-				Min tmp = (Min) minAnno;
-				min = new BigDecimal(tmp.value());
-			} else {
-				min = new BigDecimal(Double.MIN_VALUE);
-			}
-			BigDecimal max;
-			if (null != maxAnno) {
-				Max tmp = (Max) maxAnno;
-				max = new BigDecimal(tmp.value());
-			} else {
-				max = new BigDecimal(Double.MAX_VALUE);
-			}
-			/* Integer part */
-			BigInteger intValue = getValueInRange(min, max).toBigInteger();
-			BigDecimal value = new BigDecimal(intValue);
-			return decimalToReturnType(value);
-		}
-
-		if (null != (minAnno = findTypeFromList(annotations, Digits.class))) {
-
-			Digits digits = (Digits) minAnno;
-			BigDecimal divisor = BigDecimal.TEN.pow(digits.fraction());
-			BigDecimal max = BigDecimal.TEN.pow(digits.integer()).multiply(divisor);
-			BigDecimal min = max.negate();
-			/* Integer part */
-			BigInteger intValue = getValueInRange(min, max).toBigInteger();
-			BigDecimal value = new BigDecimal(intValue).divide(divisor);
-			return decimalToReturnType(value);
-		}
-
-		if (null != (minAnno = findTypeFromList(annotations, Size.class))) {
-
-			Size size = (Size) minAnno;
-
-			int minValue = size.min();
-			int maxValue = size.max();
-
-			if (maxValue == Integer.MAX_VALUE) {
-				maxValue = PodamConstants.STR_DEFAULT_LENGTH;
-			}
-
-			long length = PodamUtils.getLongInRange(minValue, maxValue);
-
-			StringBuilder sb = new StringBuilder();
-			while (sb.length() < length) {
-				sb.append(PodamUtils.getNiceCharacter());
-			}
-			return sb.toString();
-
-		}
-
-		if (null != (minAnno = findTypeFromList(annotations, Pattern.class))) {
-
-			Pattern pattern = (Pattern) minAnno;
-			LOG.warn("At the moment PODAM doesn't support @Pattern({}),"
-					+ " returning null", pattern.regexp());
-			return null;
-
-		}
+    // ------------------->> Constants
+    // ------------------->> Instance / Static variables
+    private static final Logger LOG = LoggerFactory.getLogger(BeanValidationStrategy.class);
+
+    /**
+     * A RANDOM generator
+     */
+    private static final Random RANDOM = new Random(System.currentTimeMillis());
+
+    /**
+     * bean validation annotations
+     */
+    private List<Annotation> annotations;
+
+    /**
+     * expected return type of an attribute
+     */
+    private Class<?> attributeType;
+
+    // ------------------->> Constructors
+    /**
+     * Constructor for the strategy
+     *
+     * @param annotations bean validation annotations
+     * @param attributeType expected return type of an attribute
+     */
+    public BeanValidationStrategy(List<Annotation> annotations, Class<?> attributeType) {
+        this.annotations = annotations;
+        this.attributeType = attributeType;
+    }
+
+    // ------------------->> Public methods
+    // ------------------->> Getters / Setters
+    /**
+     * It returns a {@link Calendar} objects complying with Java bean validation
+     * annotations.
+     *
+     * {@inheritDoc}
+     */
+    public Object getValue() throws PodamMockeryException {
+
+        if (null != findTypeFromList(annotations, AssertTrue.class)) {
+
+            return Boolean.TRUE;
+        }
+
+        if (null != findTypeFromList(annotations, AssertFalse.class)) {
+
+            return Boolean.FALSE;
+        }
+
+        if (null != findTypeFromList(annotations, Past.class)) {
+
+            int days = RANDOM.nextInt(365) + 1;
+            long timestamp = System.currentTimeMillis() - TimeUnit.DAYS.toSeconds(days);
+            return timestampToReturnType(timestamp);
+        }
+
+        if (null != findTypeFromList(annotations, Future.class)) {
+
+            int days = RANDOM.nextInt(365) + 1;
+            long timestamp = System.currentTimeMillis() + TimeUnit.DAYS.toSeconds(days);
+            return timestampToReturnType(timestamp);
+        }
+
+        Annotation minAnno = null;
+        Annotation maxAnno = null;
+
+        minAnno = findTypeFromList(annotations, DecimalMin.class);
+        maxAnno = findTypeFromList(annotations, DecimalMax.class);
+        if ((null != minAnno) || (null != maxAnno)) {
+
+            BigDecimal min;
+            if (null != minAnno) {
+                DecimalMin tmp = (DecimalMin) minAnno;
+                min = new BigDecimal(tmp.value());
+            } else {
+                min = new BigDecimal(Double.MIN_VALUE);
+            }
+            BigDecimal max;
+            if (null != maxAnno) {
+                DecimalMax tmp = (DecimalMax) maxAnno;
+                max = new BigDecimal(tmp.value());
+            } else {
+                max = new BigDecimal(Double.MAX_VALUE);
+            }
+            return decimalToReturnType(getValueInRange(min, max));
+        }
+
+        minAnno = findTypeFromList(annotations, Min.class);
+        maxAnno = findTypeFromList(annotations, Max.class);
+        if ((null != minAnno) || (null != maxAnno)) {
+
+            BigDecimal min;
+            if (null != minAnno) {
+                Min tmp = (Min) minAnno;
+                min = new BigDecimal(tmp.value());
+            } else {
+                min = new BigDecimal(Double.MIN_VALUE);
+            }
+            BigDecimal max;
+            if (null != maxAnno) {
+                Max tmp = (Max) maxAnno;
+                max = new BigDecimal(tmp.value());
+            } else {
+                max = new BigDecimal(Double.MAX_VALUE);
+            }
+            /* Integer part */
+            BigInteger intValue = getValueInRange(min, max).toBigInteger();
+            BigDecimal value = new BigDecimal(intValue);
+            return decimalToReturnType(value);
+        }
+
+        if (null != (minAnno = findTypeFromList(annotations, Digits.class))) {
+
+            Digits digits = (Digits) minAnno;
+            BigDecimal divisor = BigDecimal.TEN.pow(digits.fraction());
+            BigDecimal max = BigDecimal.TEN.pow(digits.integer()).multiply(divisor);
+            BigDecimal min = max.negate();
+            /* Integer part */
+            BigInteger intValue = getValueInRange(min, max).toBigInteger();
+            BigDecimal value = new BigDecimal(intValue).divide(divisor);
+            return decimalToReturnType(value);
+        }
+
+        if (null != (minAnno = findTypeFromList(annotations, Size.class))) {
+
+            Size size = (Size) minAnno;
+
+            int minValue = size.min();
+            int maxValue = size.max();
+
+            if (maxValue == Integer.MAX_VALUE) {
+                maxValue = PodamConstants.STR_DEFAULT_LENGTH;
+            }
+
+            long length = PodamUtils.getLongInRange(minValue, maxValue);
+
+            StringBuilder sb = new StringBuilder();
+            while (sb.length() < length) {
+                sb.append(PodamUtils.getNiceCharacter());
+            }
+            return sb.toString();
 
-		return null;
-	}
+        }
 
-	// ------------------->> Private methods
+        if (null != (minAnno = findTypeFromList(annotations, Pattern.class))) {
 
-	/**
-	 * Utility to find an item of a desired type in the given list
-	 *
-	 * @param <T>
-	 *        Return type of item to find
-	 * @param list
-	 *        List to search in
-	 * @param type
-	 *        Type to find in the list
-	 * @return
-	 *        First element from the list of desired type
-	 */
-	@SuppressWarnings("unchecked")
-	private static <T> T findTypeFromList(List<?> list, Class<T> type) {
-
-		for (Object item : list) {
-			if (type.isAssignableFrom(item.getClass())) {
-				return (T)item;
-			}
-		}
-		return null;
-	}
+            Pattern pattern = (Pattern) minAnno;
+            LOG.warn("At the moment PODAM doesn't support @Pattern({}),"
+                    + " returning null", pattern.regexp());
+            return null;
 
-	/**
-	 * Produces random decimal value within specified range
-	 *
-	 * @param min
-	 *        minimum value of range
-	 * @param max
-	 *        maximum value of range
-	 * @return
-	 *        decimal value in the specified range
-	 */
-	private BigDecimal getValueInRange(BigDecimal min, BigDecimal max) {
+        }
 
-		BigDecimal scale = new BigDecimal(RANDOM.nextDouble());
-		return min.add(max.subtract(min).multiply(scale));
-	}
+        return null;
+    }
 
-	/**
-	 * Converts intermediate decimal value to the actual attribute type,
-	 * for example, string representation of this decimal
-	 *
-	 * @param result
-	 *        {@link BigDecimal} intermediate result to convert to the
-	 *        real attribute type 
-	 * @return actual attribute type object
-	 */
-	private Object decimalToReturnType(BigDecimal result) {
+    // ------------------->> Private methods
+    /**
+     * Utility to find an item of a desired type in the given list
+     *
+     * @param <T> Return type of item to find
+     * @param list List to search in
+     * @param type Type to find in the list
+     * @return First element from the list of desired type
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> T findTypeFromList(List<?> list, Class<T> type) {
 
-		if (String.class.equals(attributeType)) {
+        for (Object item : list) {
+            if (type.isAssignableFrom(item.getClass())) {
+                return (T) item;
+            }
+        }
+        return null;
+    }
 
-			return result.toPlainString();
+    /**
+     * Produces random decimal value within specified range
+     *
+     * @param min minimum value of range
+     * @param max maximum value of range
+     * @return decimal value in the specified range
+     */
+    private BigDecimal getValueInRange(BigDecimal min, BigDecimal max) {
 
-		} else if (Double.class.equals(attributeType)
-				|| double.class.equals(attributeType)) {
+        BigDecimal scale = new BigDecimal(RANDOM.nextDouble());
+        return min.add(max.subtract(min).multiply(scale));
+    }
 
-			return result.doubleValue();
+    /**
+     * Converts intermediate decimal value to the actual attribute type, for
+     * example, string representation of this decimal
+     *
+     * @param result {@link BigDecimal} intermediate result to convert to the
+     * real attribute type
+     * @return actual attribute type object
+     */
+    private Object decimalToReturnType(BigDecimal result) {
 
-		} else if (Float.class.equals(attributeType)
-				|| float.class.equals(attributeType)) {
+        if (String.class.equals(attributeType)) {
 
-			return result.floatValue();
+            return result.toPlainString();
 
-		} else if (Long.class.equals(attributeType)
-				|| long.class.equals(attributeType)) {
+        } else if (Double.class.equals(attributeType)
+                || double.class.equals(attributeType)) {
 
-			return result.longValue();
+            return result.doubleValue();
 
-		} else if (Integer.class.equals(attributeType)
-				|| int.class.equals(attributeType)) {
+        } else if (Float.class.equals(attributeType)
+                || float.class.equals(attributeType)) {
 
-			return result.intValue();
+            return result.floatValue();
 
-		} else if (Short.class.equals(attributeType)
-				|| short.class.equals(attributeType)) {
+        } else if (Long.class.equals(attributeType)
+                || long.class.equals(attributeType)) {
 
-			return result.shortValue();
+            return result.longValue();
 
-		} else if (Byte.class.equals(attributeType)
-				|| byte.class.equals(attributeType)) {
+        } else if (Integer.class.equals(attributeType)
+                || int.class.equals(attributeType)) {
 
-			return result.byteValue();
+            return result.intValue();
 
-		} else if (attributeType.isAssignableFrom(BigDecimal.class)) {
+        } else if (Short.class.equals(attributeType)
+                || short.class.equals(attributeType)) {
 
-			return result;
+            return result.shortValue();
 
-		} else if (attributeType.isAssignableFrom(BigInteger.class)) {
+        } else if (Byte.class.equals(attributeType)
+                || byte.class.equals(attributeType)) {
 
-			return result.toBigInteger();
+            return result.byteValue();
 
-		} else {
+        } else if (attributeType.isAssignableFrom(BigDecimal.class)) {
 
-			LOG.warn("Unsupported attribute type {}", attributeType);
-			return null;
+            return result;
 
-		}
-	}
+        } else if (attributeType.isAssignableFrom(BigInteger.class)) {
 
-	/**
-	 * Converts intermediate long time stamp value to the actual attribute type,
-	 * {@link java.util.Date} or {@link java.util.Calendar}
-	 *
-	 * @param result
-	 *        {@link Long} intermediate result to convert to the
-	 *        real attribute type 
-	 * @return actual attribute type object
-	 */
-	private Object timestampToReturnType(Long result) {
+            return result.toBigInteger();
 
-		if (attributeType.isAssignableFrom(Date.class)) {
+        } else {
 
-			return new Date(result);
+            LOG.warn("Unsupported attribute type {}", attributeType);
+            return null;
 
-		} else if (attributeType.isAssignableFrom(Calendar.class)) {
+        }
+    }
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(result);
-			return calendar;
+    /**
+     * Converts intermediate long time stamp value to the actual attribute type,
+     * {@link java.util.Date} or {@link java.util.Calendar}
+     *
+     * @param result {@link Long} intermediate result to convert to the real
+     * attribute type
+     * @return actual attribute type object
+     */
+    private Object timestampToReturnType(Long result) {
 
-		} else {
+        if (attributeType.isAssignableFrom(Date.class)) {
 
-			LOG.warn("Unsupported attribute type {}", attributeType);
-			return null;
+            return new Date(result);
 
-		}
-	}
+        } else if (attributeType.isAssignableFrom(Calendar.class)) {
 
-	// ------------------->> equals() / hashcode() / toString()
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(result);
+            return calendar;
 
-	// ------------------->> Inner classes
+        } else {
 
+            LOG.warn("Unsupported attribute type {}", attributeType);
+            return null;
+
+        }
+    }
+
+    // ------------------->> equals() / hashcode() / toString()
+    // ------------------->> Inner classes
 }
