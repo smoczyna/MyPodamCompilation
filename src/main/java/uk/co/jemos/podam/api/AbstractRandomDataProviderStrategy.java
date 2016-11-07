@@ -30,6 +30,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -38,6 +40,8 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import uk.co.jemos.podam.typeManufacturers.BigDecimalTypeManufacturerImpl;
+import uk.co.jemos.podam.typeManufacturers.BigIntegerTypeManufacturerImpl;
 
 /**
  * Default abstract implementation of a {@link DataProviderStrategy}
@@ -91,7 +95,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * factory will use this table to avoid creating objects of the same class
      * multiple times.
      */
-    private final Map<Class<?>, Map<Type[], Object>> memoizationTable = new HashMap<Class<?>, Map<Type[], Object>>();
+    private final Map<Class<?>, Map<Type[], Object>> memorizationTable = new HashMap<Class<?>, Map<Type[], Object>>();
 
     /**
      * A mapping between types and their registered manufacturers
@@ -185,6 +189,12 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
         typeManufacturers.put(double.class, doubleManufacturer);
         typeManufacturers.put(Double.class, doubleManufacturer);
 
+        TypeManufacturer<?> bigDecimalManufacturer = new BigDecimalTypeManufacturerImpl();
+        typeManufacturers.put(BigDecimal.class, bigDecimalManufacturer);
+
+        TypeManufacturer<?> bigIntegerManufacturer = new BigIntegerTypeManufacturerImpl();
+        typeManufacturers.put(BigInteger.class, bigIntegerManufacturer);
+
         TypeManufacturer<?> stringManufacturer = new StringTypeManufacturerImpl();
         typeManufacturers.put(String.class, stringManufacturer);
 
@@ -234,7 +244,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public boolean isMemoizationEnabled() {
+    public boolean isMemorizationEnabled() {
         return isMemoizationEnabled.get();
     }
 
@@ -242,7 +252,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public void setMemoization(boolean isMemoizationEnabled) {
+    public void setMemorization(boolean isMemoizationEnabled) {
         this.isMemoizationEnabled.set(isMemoizationEnabled);
     }
 
@@ -250,7 +260,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public synchronized Object getMemoizedObject(AttributeMetadata attributeMetadata) {
+    public synchronized Object getMemorizedObject(AttributeMetadata attributeMetadata) {
 
         if (isMemoizationEnabled.get()) {
             /* No memoization for arrays, collections and maps */
@@ -260,7 +270,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
                     && !Collection.class.isAssignableFrom(pojoClass)
                     && !Map.class.isAssignableFrom(pojoClass))) {
 
-                Map<Type[], Object> map = memoizationTable.get(attributeMetadata.getAttributeType());
+                Map<Type[], Object> map = memorizationTable.get(attributeMetadata.getAttributeType());
                 if (map != null) {
                     for (Entry<Type[], Object> entry : map.entrySet()) {
                         if (Arrays.equals(entry.getKey(), attributeMetadata.getAttrGenericArgs())) {
@@ -278,14 +288,12 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public synchronized void cacheMemoizedObject(AttributeMetadata attributeMetadata,
-            Object instance) {
-
+    public synchronized void cacheMemoizedObject(AttributeMetadata attributeMetadata, Object instance) {
         if (isMemoizationEnabled.get()) {
-            Map<Type[], Object> map = memoizationTable.get(attributeMetadata.getAttributeType());
+            Map<Type[], Object> map = memorizationTable.get(attributeMetadata.getAttributeType());
             if (map == null) {
                 map = new HashMap<Type[], Object>();
-                memoizationTable.put(attributeMetadata.getAttributeType(), map);
+                memorizationTable.put(attributeMetadata.getAttributeType(), map);
             }
             LOG.trace("Saving memoized {}<{}>", attributeMetadata.getAttributeType(), attributeMetadata.getAttrGenericArgs());
             map.put(attributeMetadata.getAttrGenericArgs(), instance);
@@ -296,10 +304,8 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public synchronized void clearMemoizationCache() {
-
-        memoizationTable.clear();
-
+    public synchronized void clearMemorizationCache() {
+        memorizationTable.clear();
     }
 
     /**
@@ -352,9 +358,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public <T> DataProviderStrategy addOrReplaceTypeManufacturer(
-            Class<? extends T> type, TypeManufacturer<T> typeManufacturer) {
-
+    public <T> DataProviderStrategy addOrReplaceTypeManufacturer(Class<? extends T> type, TypeManufacturer<T> typeManufacturer) {
         typeManufacturers.put(type, typeManufacturer);
         return this;
     }
@@ -363,8 +367,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public <T> DataProviderStrategy removeTypeManufacturer(
-            Class<T> type) {
+    public <T> DataProviderStrategy removeTypeManufacturer(Class<T> type) {
 
         typeManufacturers.remove(type);
         return this;

@@ -26,8 +26,7 @@ import net.jcip.annotations.ThreadSafe;
  *
  */
 @ThreadSafe
-public final class RandomDataProviderStrategyImpl extends
-        AbstractRandomDataProviderStrategy {
+public final class RandomDataProviderStrategyImpl extends AbstractRandomDataProviderStrategy {
 
     // ------------------->> Constants
     // ------------------->> Instance / Static variables
@@ -37,7 +36,7 @@ public final class RandomDataProviderStrategyImpl extends
      */
     public RandomDataProviderStrategyImpl() {
         super();
-        setMemoization(false);
+        setMemorization(false);
     }
 
     // ------------------->> Public methods
@@ -49,17 +48,19 @@ public final class RandomDataProviderStrategyImpl extends
      * @return The Singleton, set with the number of collection elements set as
      * parameter
      */
-    public static RandomDataProviderStrategyImpl getInstance(
-            int nbrCollectionElements) {
-
+    public static RandomDataProviderStrategyImpl getInstance(int nbrCollectionElements) {
         RandomDataProviderStrategyImpl strategy = new RandomDataProviderStrategyImpl();
         strategy.setDefaultNumberOfCollectionElements(nbrCollectionElements);
         return strategy;
-
     }
 
     // ------------------->> Getters / Setters
     // ------------------->> Private methods
     // ------------------->> equals() / hashcode() / toString()
     // ------------------->> Inner classes
+
+    @Override
+    public void setMemorization(boolean isMemoizationEnabled) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

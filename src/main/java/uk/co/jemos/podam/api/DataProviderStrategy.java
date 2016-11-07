@@ -141,9 +141,9 @@ public interface DataProviderStrategy {
     int getMaxDepth(Class<?> type);
 
     /**
-     * Returns whether the memoization setting is enabled.
+     * Returns whether the memorization setting is enabled.
      *
-     * When memoization is enabled, only one object will be created for each
+     * When memorization is enabled, only one object will be created for each
      * type. Every next property of the same type will be a reference to the
      * same object. This can dramatically improve performance but with the
      * expense of not having objects with different values.
@@ -152,37 +152,37 @@ public interface DataProviderStrategy {
      * Implementations of this interface need to provide this value.
      * </p>
      *
-     * @return Whether the memoization setting is enabled.
+     * @return Whether the memorization setting is enabled.
      */
-    boolean isMemoizationEnabled();
+    boolean isMemorizationEnabled();
 
     /**
-     * Sets whether memoization is enabled
+     * Sets whether memorization is enabled
      *
-     * @param isMemoizationEnabled whether memoization is enabled
+     * @param isMemoizationEnabled whether memorization is enabled
      */
-    void setMemoization(boolean isMemoizationEnabled);
+    void setMemorization(boolean isMemoizationEnabled);
 
     /**
-     * Obtains object from memoization cache
+     * Obtains object from memorization cache
      *
      * @param attributeMetadata attribute metadata for instance to be fetched
-     * @return object instance from memoization cache
+     * @return object instance from memorization cache
      */
-    Object getMemoizedObject(AttributeMetadata attributeMetadata);
+    Object getMemorizedObject(AttributeMetadata attributeMetadata);
 
     /**
-     * Saves object in memoization cache
+     * Saves object in memorization cache
      *
-     * @param attributeMetadata attribute metadata for instance being memoized
-     * @param instance object instance to save in memoization cache
+     * @param attributeMetadata attribute metadata for instance being memorized
+     * @param instance object instance to save in memorization cache
      */
     void cacheMemoizedObject(AttributeMetadata attributeMetadata, Object instance);
 
     /**
-     * Clears memoization cache
+     * Clears memorization cache
      */
-    void clearMemoizationCache();
+    void clearMemorizationCache();
 
     /**
      * Rearranges POJO's constructors in order they will be tried to produce the
