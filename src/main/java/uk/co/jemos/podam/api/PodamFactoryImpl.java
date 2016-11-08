@@ -281,7 +281,7 @@ public class PodamFactoryImpl implements PodamFactory {
                 LOG.debug("Couldn't create an instance for constructor: " + candidateConstructor + ". Will try another one...", t);
             }
         }
-        LOG.debug("For class {} PODAM could not possibly create a value statically. Will try other means.", pojoClass);
+        LOG.debug("Couldn't create a value statically. Will try other means.", pojoClass);
         return null;
 
     }
@@ -349,7 +349,7 @@ public class PodamFactoryImpl implements PodamFactory {
         }
 
         if (retValue == null) {
-            LOG.debug("For class {} Couldn't create a value. Will try other means.", pojoClass);
+            LOG.debug("Couldn't create a value for that class. Will try other means.", pojoClass);
         }
         return retValue;
     }
