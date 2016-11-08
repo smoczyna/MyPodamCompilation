@@ -66,7 +66,7 @@ public class RandomValuePopulator {
         return this.populateAllFields(targetClass, null);
     }
     
-    public Object populateAllFields(final Class targetClass, Map exclussions) throws IllegalAccessException, InstantiationException {
+    public Object populateAllFields(final Class targetClass, Map exclusions) throws IllegalAccessException, InstantiationException {
         final Object target;
         try {
             if (isMathNumberType(targetClass)) {
@@ -87,7 +87,7 @@ public class RandomValuePopulator {
         for (final Field field : allFields) {
             try {
                 // check if the field is not in exclussion list                
-                if (exclussions!=null && exclussions.containsValue(field.getName()))
+                if (exclusions!=null && exclusions.containsValue(field.getName()))
                     continue;
 
                 //Set fields to be accessible even when private
