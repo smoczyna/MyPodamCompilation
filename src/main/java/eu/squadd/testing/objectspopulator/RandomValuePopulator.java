@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import org.apache.commons.beanutils.ConstructorUtils;
 import eu.squadd.testing.objectspopulator.api.ScannerFactoryImpl;
 import eu.squadd.testing.objectspopulator.api.ScannerFactory;
+import java.util.Map;
 
 /**
  *
@@ -62,6 +63,10 @@ public class RandomValuePopulator {
     }
 
     public Object populateAllFields(final Class targetClass) throws IllegalAccessException, InstantiationException {
+        return this.populateAllFields(targetClass, null);
+    }
+    
+    public Object populateAllFields(final Class targetClass, Map exclussions) throws IllegalAccessException, InstantiationException {
         final Object target;
         try {
             if (isMathNumberType(targetClass)) {
@@ -81,6 +86,10 @@ public class RandomValuePopulator {
         //Iterate through fields
         for (final Field field : allFields) {
             try {
+                // check if the field is not in exclussion list                
+                if (exclussions!=null && exclussions.containsValue(field.getName()))
+                    continue;
+
                 //Set fields to be accessible even when private
                 field.setAccessible(true);
 
