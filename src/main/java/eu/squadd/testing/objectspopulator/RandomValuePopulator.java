@@ -86,7 +86,7 @@ public class RandomValuePopulator {
         //Iterate through fields
         for (final Field field : allFields) {
             try {
-                // check if the field is not in exclussion list                
+                // check if the field is not on exclusion list                
                 if (exclusions!=null && exclusions.containsValue(field.getName()))
                     continue;
 
