@@ -47,7 +47,7 @@ import uk.co.jemos.podam.typeManufacturers.BigIntegerTypeManufacturerImpl;
  * Default abstract implementation of a {@link DataProviderStrategy}
  * <p>
  * This default implementation returns values based on a random generator.
- * Convinient for subclassing and redefining behaviour.
+ * Convenient for sub-classing and redefining behaviour.
  * <b>Don't use this implementation if you seek deterministic values</b>
  * </p>
  *
@@ -86,12 +86,12 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
     private final AtomicInteger nbrOfCollectionElements = new AtomicInteger();
 
     /**
-     * Flag to enable/disable the memoization setting.
+     * Flag to enable/disable the memorization setting.
      */
     private final AtomicBoolean isMemoizationEnabled = new AtomicBoolean();
 
     /**
-     * A map to keep one object for each class. If memoization is enabled, the
+     * A map to keep one object for each class. If memorization is enabled, the
      * factory will use this table to avoid creating objects of the same class
      * multiple times.
      */
@@ -263,7 +263,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
     public synchronized Object getMemorizedObject(AttributeMetadata attributeMetadata) {
 
         if (isMemoizationEnabled.get()) {
-            /* No memoization for arrays, collections and maps */
+            /* No memorization for arrays, collections and maps */
             Class<?> pojoClass = attributeMetadata.getPojoClass();
             if (pojoClass == null
                     || (!pojoClass.isArray()
@@ -377,9 +377,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public <T> T getTypeValue(AttributeMetadata attributeMetadata,
-            Map<String, Type> genericTypesArgumentsMap,
-            Class<T> pojoType) {
+    public <T> T getTypeValue(AttributeMetadata attributeMetadata, Map<String, Type> genericTypesArgumentsMap, Class<T> pojoType) {
 
         String errMsg;
         if (null == attributeMetadata) {
@@ -472,11 +470,8 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * @return itself
      */
     @Override
-    public <T> DataProviderStrategy addOrReplaceSpecific(
-            final Class<T> abstractClass, final Class<? extends T> specificClass) {
-
+    public <T> DataProviderStrategy addOrReplaceSpecific(final Class<T> abstractClass, final Class<? extends T> specificClass) {
         specificTypes.put(abstractClass, specificClass);
-
         return this;
     }
 
@@ -484,9 +479,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public <T> DataProviderStrategy removeSpecific(
-            final Class<T> abstractClass) {
-
+    public <T> DataProviderStrategy removeSpecific(final Class<T> abstractClass) {
         specificTypes.remove(abstractClass);
         return this;
     }
@@ -495,9 +488,7 @@ public abstract class AbstractRandomDataProviderStrategy implements RandomDataPr
      * {@inheritDoc}
      */
     @Override
-    public <T> Class<? extends T> getSpecificClass(
-            Class<T> nonInstantiatableClass) {
-
+    public <T> Class<? extends T> getSpecificClass(Class<T> nonInstantiatableClass) {
         @SuppressWarnings("unchecked")
         Class<? extends T> found = (Class<? extends T>) specificTypes
                 .get(nonInstantiatableClass);

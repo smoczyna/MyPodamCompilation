@@ -59,8 +59,4 @@ public final class RandomDataProviderStrategyImpl extends AbstractRandomDataProv
     // ------------------->> equals() / hashcode() / toString()
     // ------------------->> Inner classes
 
-    @Override
-    public void setMemorization(boolean isMemoizationEnabled) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

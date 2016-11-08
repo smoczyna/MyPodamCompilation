@@ -55,8 +55,7 @@ public class PodamFactoryImpl implements PodamFactory {
      * The default is {@link NullExternalFactory}.
      * </p>
      */
-    private PodamFactory externalFactory
-            = NullExternalFactory.getInstance();
+    private PodamFactory externalFactory = NullExternalFactory.getInstance();
 
     /**
      * The strategy to use to fill data.
@@ -64,8 +63,7 @@ public class PodamFactoryImpl implements PodamFactory {
      * The default is {@link RandomDataProviderStrategyImpl}.
      * </p>
      */
-    private DataProviderStrategy strategy
-            = new RandomDataProviderStrategyImpl();
+    private DataProviderStrategy strategy = new RandomDataProviderStrategyImpl();
 
     /**
      * The strategy to use to introspect data.
@@ -73,16 +71,14 @@ public class PodamFactoryImpl implements PodamFactory {
      * The default is {@link DefaultClassInfoStrategy}.
      * </p>
      */
-    private ClassInfoStrategy classInfoStrategy
-            = DefaultClassInfoStrategy.getInstance();
+    private ClassInfoStrategy classInfoStrategy = DefaultClassInfoStrategy.getInstance();
 
     // ------------------->> Constructors
     /**
      * Default constructor.
      */
     public PodamFactoryImpl() {
-        this(NullExternalFactory.getInstance(),
-                new RandomDataProviderStrategyImpl());
+        this(NullExternalFactory.getInstance(), new RandomDataProviderStrategyImpl());
     }
 
     /**
@@ -91,7 +87,6 @@ public class PodamFactoryImpl implements PodamFactory {
      * @param strategy The strategy to use to fill data
      */
     public PodamFactoryImpl(DataProviderStrategy strategy) {
-
         this(NullExternalFactory.getInstance(), strategy);
     }
 
@@ -112,8 +107,7 @@ public class PodamFactoryImpl implements PodamFactory {
      * factory cannot handle
      * @param strategy The strategy to use to fill data
      */
-    public PodamFactoryImpl(PodamFactory externalFactory,
-            DataProviderStrategy strategy) {
+    public PodamFactoryImpl(PodamFactory externalFactory, DataProviderStrategy strategy) {
         this.externalFactory = externalFactory;
         this.strategy = strategy;
     }
@@ -401,11 +395,9 @@ public class PodamFactoryImpl implements PodamFactory {
      * @throws PodamMockeryException if a problem occurred while creating a POJO
      * instance or while setting its state
      */
-    private <T> T manufacturePojoInternal(Class<T> pojoClass,
-            AttributeMetadata pojoMetadata, ManufacturingContext manufacturingCtx,
-            Type... genericTypeArgs)
-            throws InstantiationException, IllegalAccessException,
-            InvocationTargetException, ClassNotFoundException {
+    private <T> T manufacturePojoInternal(Class<T> pojoClass, AttributeMetadata pojoMetadata, 
+            ManufacturingContext manufacturingCtx, Type... genericTypeArgs) 
+            throws InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
 
         // reuse object from memorization table
         @SuppressWarnings("unchecked")
