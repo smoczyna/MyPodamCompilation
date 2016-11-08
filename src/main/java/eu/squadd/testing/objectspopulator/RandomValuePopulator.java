@@ -98,7 +98,8 @@ public class RandomValuePopulator {
                 if (fieldType.isEnum() && Enum.class.isAssignableFrom(fieldType)) {
                     //handle any enums here if you have any
 
-                } else if (isMathNumberType(fieldType)) {
+                } 
+                else if (isMathNumberType(fieldType)) {
                     //System.out.println("*** Math number found, populating it: "+fieldType);                
                     field.set(target, getManufacturedPojo(fieldType));
                 } //Check if the field is a collection
