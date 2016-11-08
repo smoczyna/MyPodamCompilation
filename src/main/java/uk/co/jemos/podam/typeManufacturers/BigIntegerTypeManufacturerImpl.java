@@ -19,7 +19,7 @@ import uk.co.jemos.podam.common.PodamLongValue;
 
 /**
  *
- * @author z094
+ * @author smoczna
  */
 public class BigIntegerTypeManufacturerImpl extends AbstractTypeManufacturer<BigInteger> {
 
