@@ -37,45 +37,44 @@ public class RandomValuePopulator {
     private <P> P getManufacturedPojo(final Class<P> klass) {
         return podamFactory.manufacturePojo(klass);
     }
-    
+
     private <P> P getMathNumberType(final Class<P> klass) {
         try {
-            if (BigDecimal.class.isAssignableFrom(klass))
+            if (BigDecimal.class.isAssignableFrom(klass)) {
                 return (P) ConstructorUtils.invokeConstructor(klass, 0L);
-            else if (BigInteger.class.isAssignableFrom(klass))
+            } else if (BigInteger.class.isAssignableFrom(klass)) {
                 return (P) ConstructorUtils.invokeConstructor(klass, 0);
-            else {
+            } else {
                 System.out.println("*** Unknown Math type, skipping for now !!!");
                 return null;
-            }                
+            }
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ex) {
             Logger.getLogger(RandomValuePopulator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
     }
-    
+
     private Set<Field> getAllFields(Class targetClass, Predicate<Field> alwaysTrue) {
         Field[] fields = targetClass.getDeclaredFields();
         Set<Field> result = new HashSet();
         result.addAll(Arrays.asList(fields));
         return result;
     }
-    
-    public Object populateAllFields(final Class targetClass) throws IllegalAccessException, InstantiationException {        
+
+    public Object populateAllFields(final Class targetClass) throws IllegalAccessException, InstantiationException {
         final Object target;
         try {
             if (isMathNumberType(targetClass)) {
                 target = getMathNumberType(targetClass);
-            }    
-            else
+            } else {
                 target = ConstructorUtils.invokeConstructor(targetClass, null);
+            }
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException ex) {
             System.err.println(ex.getMessage());
             return null;
         }
 
         //final Object target = targetClass.newInstance();
-
         //Get all fields present on the target class
         final Set<Field> allFields = getAllFields(targetClass, Predicates.<Field>alwaysTrue());
 
@@ -90,12 +89,10 @@ public class RandomValuePopulator {
                 if (fieldType.isEnum() && Enum.class.isAssignableFrom(fieldType)) {
                     //handle any enums here if you have any
 
-                } else if (isMathNumberType(fieldType)) {                
+                } else if (isMathNumberType(fieldType)) {
                     //System.out.println("*** Math number found, populating it: "+fieldType);                
                     field.set(target, getManufacturedPojo(fieldType));
-                }            
-
-                //Check if the field is a collection
+                } //Check if the field is a collection
                 else if (Collection.class.isAssignableFrom(fieldType)) {
 
                     //Get the generic type class of the collection
@@ -110,7 +107,6 @@ public class RandomValuePopulator {
                         //final List<Object> list = new ArrayList();
                         //list.add(populateAllIn(ClassExtendingAbstract.class));
                         //field.set(target, list);
-
                     } else {
                         final List<Object> list = new ArrayList();
                         list.add(populateAllFields(genericClass));
@@ -124,8 +120,7 @@ public class RandomValuePopulator {
                 }
             } catch (IllegalAccessException | InstantiationException ex) {
                 System.err.println(ex.getMessage());
-                continue;
-            } 
+            }
         }
         return target;
     }

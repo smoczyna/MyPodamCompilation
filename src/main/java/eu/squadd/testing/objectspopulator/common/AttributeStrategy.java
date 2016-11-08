@@ -18,8 +18,8 @@ public interface AttributeStrategy<T> {
      *
      * @return A value of the given type
      *
-     * @throws MockeryException If an exception occurred while assigning
-     * the value specified by this strategy
+     * @throws MockeryException If an exception occurred while assigning the
+     * value specified by this strategy
      */
     T getValue();
 

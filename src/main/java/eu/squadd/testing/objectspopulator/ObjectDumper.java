@@ -14,6 +14,7 @@ import java.util.HashMap;
  * @author z094
  */
 public class ObjectDumper {
+
     private static final ObjectDumper instance = new ObjectDumper();
 
     protected static ObjectDumper getInstance() {
@@ -21,6 +22,7 @@ public class ObjectDumper {
     }
 
     class DumpContext {
+
         int maxDepth = 0;
         int maxArrayElements = 0;
         int callCount = 0;
@@ -30,17 +32,17 @@ public class ObjectDumper {
 
     /**
      * this method dumps object structure
+     *
      * @param o
      * @param maxDepth
      * @param maxArrayElements
      * @param ignoreList
-     * @return 
+     * @return
      */
-    
     public static String dump(Object o) {
         return dump(o, 0, 0, null);
     }
-    
+
     public static String dump(Object o, int maxDepth, int maxArrayElements, String[] ignoreList) {
         DumpContext ctx = ObjectDumper.getInstance().new DumpContext();
         ctx.maxDepth = maxDepth;
@@ -196,7 +198,7 @@ public class ObjectDumper {
         String val2 = dumpValue(value2, ctx2);
         return val1.equals(val2);
     }
-    
+
     private static String getSimpleNameWithoutArrayQualifier(Class clazz) {
         String simpleName = clazz.getSimpleName();
         int indexOfBracket = simpleName.indexOf('[');

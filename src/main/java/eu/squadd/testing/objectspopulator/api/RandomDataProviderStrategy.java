@@ -74,7 +74,8 @@ public interface RandomDataProviderStrategy extends DataProviderStrategy {
      * Setter for constructor öight comparator.
      * <p>
      * Default implementations are
-     * {@link eu.squadd.testing.objectspopulator.common.ConstructorHeavyFirstComparator} and
+     * {@link eu.squadd.testing.objectspopulator.common.ConstructorHeavyFirstComparator}
+     * and
      * {@link eu.squadd.testing.objectspopulator.common.ConstructorLightFirstComparator}.</p>
      *
      * @param constructorLightComparator constructor comparator to set
@@ -92,7 +93,8 @@ public interface RandomDataProviderStrategy extends DataProviderStrategy {
      * Setter for constructor heavy comparator.
      * <p>
      * Default implementations are
-     * {@link eu.squadd.testing.objectspopulator.common.ConstructorHeavyFirstComparator} and
+     * {@link eu.squadd.testing.objectspopulator.common.ConstructorHeavyFirstComparator}
+     * and
      * {@link eu.squadd.testing.objectspopulator.common.ConstructorLightFirstComparator}.</p>
      *
      * @param constructorHeavyComparator constructor comparator to set

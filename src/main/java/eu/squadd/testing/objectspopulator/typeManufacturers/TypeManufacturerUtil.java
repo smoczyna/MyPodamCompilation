@@ -49,8 +49,8 @@ public final class TypeManufacturerUtil {
      * @param strategy The data provider strategy
      * @param annotations The list of annotations
      * @param attributeType Type of attribute expected to be returned
-     * @return {@link AttributeStrategy}, if {@link ScannerStrategyValue} or bean
-     * validation constraint annotation was found among annotations
+     * @return {@link AttributeStrategy}, if {@link ScannerStrategyValue} or
+     * bean validation constraint annotation was found among annotations
      * @throws IllegalAccessException if attribute strategy cannot be
      * instantiated
      * @throws InstantiationException if attribute strategy cannot be
@@ -398,8 +398,8 @@ public final class TypeManufacturerUtil {
     }
 
     /**
-     * It retrieves the value for the {@link ScannerStrategyValue} annotation with
-     * which the attribute was annotated
+     * It retrieves the value for the {@link ScannerStrategyValue} annotation
+     * with which the attribute was annotated
      *
      * @param attributeType The attribute type, used for type checking
      * @param attributeStrategy The {@link AttributeStrategy} to use

@@ -26,7 +26,7 @@ public class BigIntegerTypeManufacturerImpl extends AbstractTypeManufacturer<Big
     private static final Logger LOG = LoggerFactory.getLogger(BigIntegerTypeManufacturerImpl.class);
 
     @Override
-    public BigInteger getType(DataProviderStrategy strategy, AttributeMetadata attributeMetadata, Map<String, Type> genericTypesArgumentsMap) {   
+    public BigInteger getType(DataProviderStrategy strategy, AttributeMetadata attributeMetadata, Map<String, Type> genericTypesArgumentsMap) {
         Long longValue = null;
         for (Annotation annotation : attributeMetadata.getAttributeAnnotations()) {
             if (ScannerLongValue.class.isAssignableFrom(annotation.getClass())) {
@@ -60,7 +60,7 @@ public class BigIntegerTypeManufacturerImpl extends AbstractTypeManufacturer<Big
         }
         return BigInteger.valueOf(longValue);
     }
-       
+
     private Long getLong() {
         return System.nanoTime();
     }
@@ -68,5 +68,5 @@ public class BigIntegerTypeManufacturerImpl extends AbstractTypeManufacturer<Big
     private Long getLongInRange(long minValue, long maxValue) {
         return ScannerUtils.getLongInRange(minValue, maxValue);
     }
-    
+
 }

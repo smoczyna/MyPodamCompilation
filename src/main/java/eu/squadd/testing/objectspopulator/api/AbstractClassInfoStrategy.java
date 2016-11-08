@@ -55,7 +55,7 @@ public abstract class AbstractClassInfoStrategy implements ClassInfoStrategy,
      * Set of extra methods to execute.
      *
      * @since 5.3.0
-	 *
+     *
      */
     private final Map<Class<?>, List<Method>> extraMethods = new HashMap<Class<?>, List<Method>>();
 

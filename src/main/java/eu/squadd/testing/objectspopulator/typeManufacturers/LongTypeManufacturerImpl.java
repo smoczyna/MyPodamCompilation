@@ -84,7 +84,7 @@ public class LongTypeManufacturerImpl extends AbstractTypeManufacturer<Long> {
      *
      * @param attributeMetadata attribute metadata for instance to be fetched
      * @return A long/Long value
-	 *
+     *
      */
     public Long getLong(AttributeMetadata attributeMetadata) {
 

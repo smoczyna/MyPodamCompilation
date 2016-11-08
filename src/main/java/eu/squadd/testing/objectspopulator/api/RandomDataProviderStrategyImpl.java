@@ -58,5 +58,4 @@ public final class RandomDataProviderStrategyImpl extends AbstractRandomDataProv
     // ------------------->> Private methods
     // ------------------->> equals() / hashcode() / toString()
     // ------------------->> Inner classes
-
 }

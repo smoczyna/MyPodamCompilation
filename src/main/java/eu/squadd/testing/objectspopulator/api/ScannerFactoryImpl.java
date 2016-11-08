@@ -302,7 +302,7 @@ public class ScannerFactoryImpl implements ScannerFactory {
      * constructors has been annotated with {@link PodamConstructor}
      * @throws SecurityException If an security was violated
      */
-    private <T> T instantiatePojo(Class<T> pojoClass, ManufacturingContext manufacturingCtx, 
+    private <T> T instantiatePojo(Class<T> pojoClass, ManufacturingContext manufacturingCtx,
             Map<String, Type> typeArgsMap, Type... genericTypeArgs) throws SecurityException {
 
         T retValue = null;
@@ -396,8 +396,8 @@ public class ScannerFactoryImpl implements ScannerFactory {
      * @throws MockeryException if a problem occurred while creating a POJO
      * instance or while setting its state
      */
-    private <T> T manufacturePojoInternal(Class<T> pojoClass, AttributeMetadata pojoMetadata, 
-            ManufacturingContext manufacturingCtx, Type... genericTypeArgs) 
+    private <T> T manufacturePojoInternal(Class<T> pojoClass, AttributeMetadata pojoMetadata,
+            ManufacturingContext manufacturingCtx, Type... genericTypeArgs)
             throws InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
 
         // reuse object from memorization table
@@ -754,7 +754,7 @@ public class ScannerFactoryImpl implements ScannerFactory {
     private Collection<? super Object> resolveCollectionValueWhenCollectionIsPojoAttribute(
             Object pojo, ManufacturingContext manufacturingCtx,
             AttributeMetadata attributeMetadata, Map<String, Type> typeArgsMap) {
-        
+
         String attributeName = attributeMetadata.getAttributeName();
 
         // This needs to be generic because collections can be of any type
@@ -1359,7 +1359,7 @@ public class ScannerFactoryImpl implements ScannerFactory {
             parameterValues = ScannerConstants.NO_ARGS;
         } else {
             parameterValues = new Object[parameterTypes.length];
-            
+
             Annotation[][] parameterAnnotations = constructor.getParameterAnnotations();
             Type[] genericTypes = constructor.getGenericParameterTypes();
 
@@ -1415,7 +1415,7 @@ public class ScannerFactoryImpl implements ScannerFactory {
             parameterValues = ScannerConstants.NO_ARGS;
         } else {
             parameterValues = new Object[parameterTypes.length];
-            
+
             Annotation[][] parameterAnnotations = method.getParameterAnnotations();
             Type[] genericTypes = method.getGenericParameterTypes();
 

@@ -11,7 +11,7 @@ import eu.squadd.testing.objectspopulator.common.ScannerCharValue;
 
 /**
  * Default character type manufacturer.
- * 
+ *
  * @author z094
  */
 public class CharTypeManufacturerImpl extends AbstractTypeManufacturer<Character> {

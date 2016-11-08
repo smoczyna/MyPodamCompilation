@@ -23,7 +23,7 @@ import eu.squadd.testing.objectspopulator.common.ScannerDoubleValue;
 public class BigDecimalTypeManufacturerImpl extends AbstractTypeManufacturer<BigDecimal> {
 
     private static final Logger LOG = LoggerFactory.getLogger(BigDecimalTypeManufacturerImpl.class);
-    
+
     @Override
     public BigDecimal getType(DataProviderStrategy strategy, AttributeMetadata attributeMetadata, Map<String, Type> genericTypesArgumentsMap) {
         BigDecimal retValue = null;
@@ -64,15 +64,15 @@ public class BigDecimalTypeManufacturerImpl extends AbstractTypeManufacturer<Big
         }
         return retValue;
     }
-    
-    public BigDecimal getBigDecimal(AttributeMetadata attributeMetadata) {        
+
+    public BigDecimal getBigDecimal(AttributeMetadata attributeMetadata) {
         double doubleVal;
         do {
             doubleVal = RANDOM.nextDouble();
         } while (doubleVal == 0.0);
         return BigDecimal.valueOf(doubleVal);
     }
-    
+
     public BigDecimal getBigDecimalInRange(double minValue, double maxValue, AttributeMetadata attributeMetadata) {
 
         // This can happen. It's a way to specify a precise value
