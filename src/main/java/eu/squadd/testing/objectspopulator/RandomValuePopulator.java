@@ -119,14 +119,14 @@ public class RandomValuePopulator {
                         //field.set(target, list);
                     } else {
                         final List<Object> list = new ArrayList();
-                        list.add(populateAllFields(genericClass));
+                        list.add(populateAllFields(genericClass, exclusions));
                         field.set(target, list);
                     }
 
                 } else if ((isSimpleType(fieldType) || isSimplePrimitiveWrapperType(fieldType)) && !fieldType.isEnum()) {
                     field.set(target, getManufacturedPojo(fieldType));
                 } else if (!fieldType.isEnum()) {
-                    field.set(target, populateAllFields(fieldType));
+                    field.set(target, populateAllFields(fieldType, exclusions));
                 }
             } catch (IllegalAccessException | InstantiationException ex) {
                 System.err.println(ex.getMessage());
