@@ -127,4 +127,7 @@ public interface ScannerFactory {
      */
     ScannerFactory setClassStrategy(ClassInfoStrategy classInfoStrategy);
 
+    Integer getRecursionDepth();
+    
+    void setRecursionDepth(Integer recursionDepth);
 }

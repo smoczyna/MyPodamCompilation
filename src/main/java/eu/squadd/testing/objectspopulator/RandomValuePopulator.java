@@ -33,10 +33,13 @@ import java.util.Map;
  */
 public class RandomValuePopulator {
 
-    private final ScannerFactory podamFactory = new ScannerFactoryImpl();
+    private final ScannerFactory scannerFactory = new ScannerFactoryImpl();
 
+    private boolean stopOnMxRecusionDepth = false;
+    private Integer currentRecursionDepth;
+    
     private <P> P getManufacturedPojo(final Class<P> klass) {
-        return podamFactory.manufacturePojo(klass);
+        return scannerFactory.manufacturePojo(klass);
     }
 
     private <P> P getMathNumberType(final Class<P> klass) {
@@ -82,59 +85,73 @@ public class RandomValuePopulator {
         //final Object target = targetClass.newInstance();
         //Get all fields present on the target class
         final Set<Field> allFields = getAllFields(targetClass, Predicates.<Field>alwaysTrue());
+        if (this.stopOnMxRecusionDepth)
+            this.currentRecursionDepth++;
+        
+        //Iterate through fields if recursion depth is not reached
+        if (!this.stopOnMxRecusionDepth || (this.stopOnMxRecusionDepth && this.currentRecursionDepth <= scannerFactory.getRecursionDepth())) {
+            for (final Field field : allFields) {
+                try {
+                    // check if the field is not on exclusion list                
+                    if (exclusions!=null && exclusions.containsValue(field.getName()))
+                        continue;
 
-        //Iterate through fields
-        for (final Field field : allFields) {
-            try {
-                // check if the field is not on exclusion list                
-                if (exclusions!=null && exclusions.containsValue(field.getName()))
-                    continue;
+                    //Set fields to be accessible even when private
+                    field.setAccessible(true);
 
-                //Set fields to be accessible even when private
-                field.setAccessible(true);
+                    final Class<?> fieldType = field.getType();
 
-                final Class<?> fieldType = field.getType();
+                    if (fieldType.isEnum() && Enum.class.isAssignableFrom(fieldType)) {
+                        //handle any enums here if you have any
 
-                if (fieldType.isEnum() && Enum.class.isAssignableFrom(fieldType)) {
-                    //handle any enums here if you have any
+                    } 
+                    else if (isMathNumberType(fieldType)) {
+                        //System.out.println("*** Math number found, populating it: "+fieldType);                
+                        field.set(target, getManufacturedPojo(fieldType));
+                    } //Check if the field is a collection
+                    else if (Collection.class.isAssignableFrom(fieldType)) {
 
-                } 
-                else if (isMathNumberType(fieldType)) {
-                    //System.out.println("*** Math number found, populating it: "+fieldType);                
-                    field.set(target, getManufacturedPojo(fieldType));
-                } //Check if the field is a collection
-                else if (Collection.class.isAssignableFrom(fieldType)) {
+                        //Get the generic type class of the collection
+                        final Class<?> genericClass = getGenericClass(field);
 
-                    //Get the generic type class of the collection
-                    final Class<?> genericClass = getGenericClass(field);
+                        //Check if the generic type of a list is abstract
+                        if (Modifier.isAbstract(genericClass.getModifiers())) {
 
-                    //Check if the generic type of a list is abstract
-                    if (Modifier.isAbstract(genericClass.getModifiers())) {
+                            System.out.println("Abstract classes are not supported !!!");
 
-                        System.out.println("Abstract classes are not supported !!!");
+                            // this stuff needs real class extending abstract one to work
+                            //final List<Object> list = new ArrayList();
+                            //list.add(populateAllIn(ClassExtendingAbstract.class));
+                            //field.set(target, list);
+                        } else {
+                            final List<Object> list = new ArrayList();
+                            list.add(populateAllFields(genericClass, exclusions));
+                            field.set(target, list);
+                        }
 
-                        // this stuff needs real class extending abstract one to work
-                        //final List<Object> list = new ArrayList();
-                        //list.add(populateAllIn(ClassExtendingAbstract.class));
-                        //field.set(target, list);
-                    } else {
-                        final List<Object> list = new ArrayList();
-                        list.add(populateAllFields(genericClass, exclusions));
-                        field.set(target, list);
+                    } else if ((isSimpleType(fieldType) || isSimplePrimitiveWrapperType(fieldType)) && !fieldType.isEnum()) {
+                        field.set(target, getManufacturedPojo(fieldType));
+                    } else if (!fieldType.isEnum()) {
+                        field.set(target, populateAllFields(fieldType, exclusions));
                     }
-
-                } else if ((isSimpleType(fieldType) || isSimplePrimitiveWrapperType(fieldType)) && !fieldType.isEnum()) {
-                    field.set(target, getManufacturedPojo(fieldType));
-                } else if (!fieldType.isEnum()) {
-                    field.set(target, populateAllFields(fieldType, exclusions));
+                } catch (IllegalAccessException | InstantiationException ex) {
+                    System.err.println(ex.getMessage());
                 }
-            } catch (IllegalAccessException | InstantiationException ex) {
-                System.err.println(ex.getMessage());
             }
         }
         return target;
     }
 
+    public Object populateAllFields(final Class targetClass, Map exclusions, int recursionDepth) throws IllegalAccessException, InstantiationException {
+        this.scannerFactory.setRecursionDepth(recursionDepth);
+        this.stopOnMxRecusionDepth = true;
+        this.currentRecursionDepth = 1;
+        Object result = populateAllFields(targetClass, exclusions);
+        this.stopOnMxRecusionDepth = false;
+        this.currentRecursionDepth = 1;
+        return result;        
+    }
+    
     private Class<?> getGenericClass(final Field field) {
         final ParameterizedType collectionType = (ParameterizedType) field.getGenericType();
         return (Class<?>) collectionType.getActualTypeArguments()[0];

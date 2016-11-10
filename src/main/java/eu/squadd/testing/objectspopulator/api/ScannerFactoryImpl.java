@@ -24,7 +24,6 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
-import eu.squadd.testing.objectspopulator.common.ScannerConstructor;
 
 /**
  * The PODAM factory implementation
@@ -41,9 +40,10 @@ public class ScannerFactoryImpl implements ScannerFactory {
 
     // ------------------->> Constants
     private static final String RESOLVING_COLLECTION_EXCEPTION_STR = "An exception occurred while resolving the collection";
-
     private static final String MAP_CREATION_EXCEPTION_STR = "An exception occurred while creating a Map object";
-
+    
+    private Integer recursionDepth = 0;
+    
     /**
      * Application logger
      */
@@ -201,6 +201,16 @@ public class ScannerFactoryImpl implements ScannerFactory {
     public ScannerFactory setExternalFactory(ScannerFactory externalFactory) {
         this.externalFactory = externalFactory;
         return this;
+    }
+
+    @Override
+    public Integer getRecursionDepth() {
+        return recursionDepth;
+    }
+
+    @Override
+    public void setRecursionDepth(Integer recursionDepth) {
+        this.recursionDepth = recursionDepth;
     }
 
     // ------------------->> Private methods

@@ -19,6 +19,8 @@ import java.util.Arrays;
  */
 public class NullExternalFactory extends AbstractExternalFactory {
 
+    private Integer recursionDepth = 0;
+    
     // ------------------->> Constants
     /**
      * Application logger
@@ -55,5 +57,15 @@ public class NullExternalFactory extends AbstractExternalFactory {
     @Override
     public <T> T populatePojo(T pojo, Type... genericTypeArgs) {
         return pojo;
+    }
+
+    @Override
+    public Integer getRecursionDepth() {
+        return recursionDepth;
+    }
+
+    @Override
+    public void setRecursionDepth(Integer recursionDepth) {
+        this.recursionDepth = recursionDepth;
     }
 }
