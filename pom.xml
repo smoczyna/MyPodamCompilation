@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+This application is based on PODAM open source project
+https://devopsfolks.github.io/podam/index.html
+and was modified to support Math types (previously not supported)
+it has also exclusion list added to skip problematic fields (for instance circular references causing infinite loops)
+--> 
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
